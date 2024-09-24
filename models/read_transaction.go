@@ -2,6 +2,7 @@ package models
 
 import (
 	"encoding/json"
+
 	"github.com/tidwall/gjson"
 )
 
@@ -261,9 +262,9 @@ type ObjectChange struct {
 }
 
 type BalanceChanges struct {
-	Owner    ObjectOwner `json:"owner"`
-	CoinType string      `json:"coinType"`
-	Amount   string      `json:"amount"`
+	Owner    FlexibleObjectOwner `json:"owner"`
+	CoinType string              `json:"coinType"`
+	Amount   string              `json:"amount"`
 }
 
 type SuiMultiGetTransactionBlocksRequest struct {

@@ -2,6 +2,7 @@ package models
 
 import (
 	"encoding/json"
+
 	"github.com/tidwall/gjson"
 )
 
@@ -89,11 +90,34 @@ type SuiObjectResponseError struct {
 	Digest   string `json:"digest"`
 }
 
+type FlexibleObjectOwner interface {
+	IsString() bool
+	IsObject() bool
+}
+
+type StringOwner string
+
+func (o StringOwner) IsString() bool {
+	return false
+}
+
+func (o StringOwner) IsObject() bool {
+	return true
+}
+
 type ObjectOwner struct {
 	// the owner's Sui address
 	AddressOwner string      `json:"AddressOwner"`
 	ObjectOwner  string      `json:"ObjectOwner"`
 	Shared       ObjectShare `json:"Shared"`
+}
+
+func (o ObjectOwner) IsString() bool {
+	return false
+}
+
+func (o ObjectOwner) IsObject() bool {
+	return true
 }
 
 type ObjectShare struct {
