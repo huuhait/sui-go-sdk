@@ -2,6 +2,7 @@ package models
 
 import (
 	"encoding/json"
+	"fmt"
 
 	"github.com/tidwall/gjson"
 )
@@ -265,6 +266,39 @@ type BalanceChanges struct {
 	Owner    FlexibleObjectOwner `json:"owner"`
 	CoinType string              `json:"coinType"`
 	Amount   string              `json:"amount"`
+}
+
+func (w *BalanceChanges) UnmarshalJSON(data []byte) error {
+	// Create a temporary structure to unmarshal the other fields (CoinType, Amount)
+	var temp struct {
+		Owner    json.RawMessage `json:"owner"`
+		CoinType string          `json:"coinType"`
+		Amount   string          `json:"amount"`
+	}
+
+	// Unmarshal into the temporary structure
+	if err := json.Unmarshal(data, &temp); err != nil {
+		return err
+	}
+
+	// Assign the CoinType and Amount values
+	w.CoinType = temp.CoinType
+	w.Amount = temp.Amount
+
+	// Now handle the "owner" field which can be a string or object
+	var s StringOwner
+	if err := json.Unmarshal(temp.Owner, &s); err == nil {
+		w.Owner = s
+		return nil
+	}
+
+	var o ObjectOwner
+	if err := json.Unmarshal(temp.Owner, &o); err == nil {
+		w.Owner = o
+		return nil
+	}
+
+	return fmt.Errorf("unable to unmarshal owner field into StringOwner or ObjectOwner")
 }
 
 type SuiMultiGetTransactionBlocksRequest struct {
