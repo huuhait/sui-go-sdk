@@ -84,7 +84,7 @@ type SuiTransactionBlock struct {
 
 type SuiObjectRef struct {
 	ObjectId string `json:"objectId"`
-	Version  int    `json:"version"`
+	Version  uint64 `json:"version"`
 	Digest   string `json:"digest"`
 }
 
@@ -99,7 +99,7 @@ type SuiGasData struct {
 type SuiObjectChangePublished struct {
 	Type      string   `json:"type"`
 	PackageId string   `json:"packageId"`
-	Version   int      `json:"version"`
+	Version   uint64   `json:"version"`
 	Digest    string   `json:"digest"`
 	Modules   []string `json:"modules"`
 }
@@ -110,7 +110,7 @@ type SuiObjectChangeTransferred struct {
 	Recipient  ObjectOwner `json:"recipient"`
 	ObjectType string      `json:"objectType"`
 	ObjectId   string      `json:"objectId"`
-	Version    int         `json:"version"`
+	Version    uint64      `json:"version"`
 	Digest     string      `json:"digest"`
 }
 
@@ -120,8 +120,8 @@ type SuiObjectChangeMutated struct {
 	Owner           ObjectOwner `json:"owner"`
 	ObjectType      string      `json:"objectType"`
 	ObjectId        string      `json:"objectId"`
-	Version         int         `json:"version"`
-	PreviousVersion int         `json:"previousVersion"`
+	Version         uint64      `json:"version"`
+	PreviousVersion uint64      `json:"previousVersion"`
 	Digest          string      `json:"digest"`
 }
 
@@ -130,7 +130,7 @@ type SuiObjectChangeDeleted struct {
 	Sender     string `json:"sender"`
 	ObjectType string `json:"objectType"`
 	ObjectId   string `json:"objectId"`
-	Version    int    `json:"version"`
+	Version    uint64 `json:"version"`
 }
 
 type SuiObjectChangeWrapped struct {
@@ -138,7 +138,7 @@ type SuiObjectChangeWrapped struct {
 	Sender     string `json:"sender"`
 	ObjectType string `json:"objectType"`
 	ObjectId   string `json:"objectId"`
-	Version    int    `json:"version"`
+	Version    uint64 `json:"version"`
 }
 
 type SuiObjectChangeCreated struct {
@@ -147,7 +147,7 @@ type SuiObjectChangeCreated struct {
 	Owner      ObjectOwner `json:"owner"`
 	ObjectType string      `json:"objectType"`
 	ObjectId   string      `json:"objectId"`
-	Version    int         `json:"version"`
+	Version    uint64      `json:"version"`
 	Digest     string      `json:"digest"`
 }
 

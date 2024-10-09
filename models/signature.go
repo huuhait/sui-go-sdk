@@ -9,9 +9,9 @@ import (
 	"log"
 	"strings"
 
-	"github.com/block-vision/sui-go-sdk/constant"
-
 	"golang.org/x/crypto/blake2b"
+
+	"github.com/block-vision/sui-go-sdk/constant"
 )
 
 type InputObjectKind map[string]interface{}
@@ -21,7 +21,7 @@ type Digest = Base64Data
 type ObjectRef struct {
 	Digest   string   `json:"digest"`
 	ObjectId ObjectId `json:"objectId"`
-	Version  int64    `json:"version"`
+	Version  uint64   `json:"version"`
 }
 
 type SigScheme string
@@ -176,6 +176,8 @@ func parseSignatureScheme(scheme byte) string {
 		return "Secp256r1"
 	case 3:
 		return "MultiSig"
+	case 5:
+		return "ZkLogin"
 	default:
 		return "ED25519"
 	}
